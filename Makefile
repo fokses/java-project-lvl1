@@ -4,3 +4,6 @@ run-dist:
 	bash build/install/app/bin/app
 check-updates:
 	gradlew dependencyUpdates
+lint:
+	gradlew checkstyleMain
+build: lint install
