@@ -1,9 +1,9 @@
 install:
-	gradlew clean install
+	sh ./gradlew clean install
 run-dist:
-	bash build/install/app/bin/app
+	sh build/install/app/bin/app
 check-updates:
-	gradlew dependencyUpdates
+	./gradlew dependencyUpdates
 lint:
-	gradlew checkstyleMain
+	sh ./gradlew checkstyleMain
 build: lint install
