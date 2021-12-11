@@ -2,6 +2,7 @@ package hexlet.code;
 
 import java.util.Random;
 import java.util.Scanner;
+
 import hexlet.code.games.*;
 
 public class Engine {
@@ -70,7 +71,9 @@ public class Engine {
 
     private static void printWrongAnswer(String wrongAnswer, String correctAnswer) {
         String wrongAnswerTemplate = "'%s' is wrong answer ;(. Correct answer was '%s'.";
+        String wrongAnswerLetsTryAgain = "Let's try again, %s!";
         System.out.println(String.format(wrongAnswerTemplate, wrongAnswer, correctAnswer));
+        System.out.println(String.format(wrongAnswerLetsTryAgain, playerName));
     }
 
     public static void setName(Scanner sc) {

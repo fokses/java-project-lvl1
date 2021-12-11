@@ -4,7 +4,7 @@ import java.util.Scanner;
 import hexlet.code.games.*;
 
 public class App {
-    private static final String[] GAMES = {"Even", "Calc"};
+    private static final String[] GAMES = {"Even", "Calc", "GCD"};
     private static final int NUMBER_OF_GAMES;
 
     static {
@@ -53,7 +53,6 @@ public class App {
         try {
             Class<?> gameClass = Class.forName("hexlet.code.games." + GAMES[choosedGame - 2]);
             game = (Game) gameClass.getDeclaredConstructor().newInstance();
-            System.out.println(game);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
