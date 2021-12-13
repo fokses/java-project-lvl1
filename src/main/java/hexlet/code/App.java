@@ -4,7 +4,7 @@ import java.util.Scanner;
 import hexlet.code.games.*;
 
 public class App {
-    private static final String[] GAMES = {"Even", "Calc", "GCD"};
+    private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression"};
     private static final int NUMBER_OF_GAMES;
 
     static {

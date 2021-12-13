@@ -4,7 +4,7 @@ import hexlet.code.Engine;
 
 public class Calc extends Game {
 
-    private static final  int NUMBER_OF_SIGNS = 3;
+    private static final int NUMBER_OF_SIGNS = 3;
 
     private static char[] signs;
 
