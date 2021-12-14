@@ -3,11 +3,11 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 
 public class Progression extends Game {
-    private static final int LENGTH_MIN = 5;
+    private static final int LENGTH_MIN = 5; //Длина прогрессии
     private static final int LENGTH_MAX = 15;
-    private static final int STEP_MIN = 2;
+    private static final int STEP_MIN = 2; // Шаг прогрессии
     private static final int STEP_MAX = 11;
-    private static final int START_MIN = 1;
+    private static final int START_MIN = 1; // Положение элемента
     private static final int START_MAX = 11;
 
     @Override

@@ -1,10 +1,11 @@
 package hexlet.code;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import hexlet.code.games.*;
 
 public class App {
-    private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression"};
+    private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
     private static final int NUMBER_OF_GAMES;
 
     static {
@@ -17,20 +18,39 @@ public class App {
 
         printListOfGames();
 
+        System.out.print("Your choice: ");
+
         try {
             choosedGame = sc.nextInt();
         } catch (Exception e) {
-            System.out.println("ERROR");
+            if (e instanceof InputMismatchException) {
+                System.out.println("You have to input numbers only!");
+            } else {
+                System.out.println(e.getMessage());
+            }
+
             sc.close();
-            return;
+            return; //There is no reason to continue
         }
 
-        processChoice(choosedGame, sc);
+        try {
+            processChoice(choosedGame, sc);
+        } catch (GameFlowException | GameCreateException | ScannerException e) { //game flow error
+            System.out.println("There was an error during execution the game");
+            System.out.println(e.getMessage());
+        } catch (WrongGameException e) { //game choice error
+            System.out.println(e.getMessage());
+        } catch (WrongAnswerException e) { //user input wrong answer
+            //without process
+        } catch (Exception e) { //Smth other
+            System.out.println(e.getMessage());
+        }
 
         sc.close();
     }
 
-    private static void processChoice(int choosedGame, Scanner sc) {
+    private static void processChoice(int choosedGame, Scanner sc)
+        throws GameFlowException, GameCreateException, ScannerException, WrongAnswerException, WrongGameException {
 
         switch (choosedGame) {
             case (0):
@@ -39,22 +59,24 @@ public class App {
                 Engine.setName(sc);
                 break;
             default:
-                if (choosedGame - 2 <= NUMBER_OF_GAMES) {
+                if (choosedGame >= 0 && choosedGame < NUMBER_OF_GAMES + 2) {
                     startGame(choosedGame, sc);
                 } else {
-                    System.out.println("Wrong choice of game");
+                    throw new WrongGameException("Wrong game choice");
                 }
         }
     }
 
-    private static void startGame(int choosedGame, Scanner sc) {
+    private static void startGame(int choosedGame, Scanner sc)
+        throws GameFlowException, GameCreateException, ScannerException, WrongAnswerException {
+
         Game game = null;
 
         try {
             Class<?> gameClass = Class.forName("hexlet.code.games." + GAMES[choosedGame - 2]);
             game = (Game) gameClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new GameCreateException(e.getMessage());
         }
 
         if (game != null) {
@@ -71,6 +93,17 @@ public class App {
         }
 
         System.out.println("0 - Exit");
-        System.out.print("Your choice: ");
+    }
+}
+
+class GameCreateException extends Exception {
+    public GameCreateException(String message) {
+        super(message);
+    }
+}
+
+class WrongGameException extends Exception {
+    public WrongGameException(String message) {
+        super(message);
     }
 }

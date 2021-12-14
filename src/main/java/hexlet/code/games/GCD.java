@@ -1,7 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import java.lang.Math.*;
+import static java.lang.Math.abs;
 
 public class GCD extends Game {
     @Override
@@ -15,28 +15,21 @@ public class GCD extends Game {
         int secondNum = Engine.getRandomInt();
 
         round[0] = String.format("%d %d", firstNum, secondNum);
-        round[1] = getGCP(firstNum, secondNum).toString();
+        round[1] = getGCD(firstNum, secondNum).toString();
     }
 
-    public static Integer getGCP(int a, int b) {
-        if (a == b) {
-            return a;
-        }
+    public static Integer getGCD(int a, int b) {
+        a = abs(a);
+        b = abs(b);
 
-        a = Math.abs(a);
-        b = Math.abs(b);
-        int min = Math.min(a, b);
-
-        if ((a == min && b % a == 0) || (b == min && a % b == 0)) {
-            return min;
-        }
-
-        for (int i = min - 1; i > 1; i--) {
-            if (a % i == 0 && b % i == 0) {
-                return i;
+        while (a != 0 && b != 0) {
+            if (a > b) {
+                a = a % b;
+            } else {
+                b = b % a;
             }
         }
 
-        return 1;
+        return a + b;
     }
 }

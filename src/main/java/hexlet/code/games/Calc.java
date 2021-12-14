@@ -31,7 +31,7 @@ public class Calc extends Game {
     }
 
     private String getCorrectAnswer(int firstNum, int secondNum, char sign) {
-        Integer result = 0;
+        int result = 0;
 
         switch (sign) {
             case ('+'):
@@ -47,6 +47,6 @@ public class Calc extends Game {
                 break;
         }
 
-        return result.toString();
+        return String.valueOf(result);
     }
 }

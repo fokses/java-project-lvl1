@@ -10,13 +10,8 @@ public class Even extends Game {
     @Override
     public final void round(String[] round) {
         Integer randomInt = Engine.getRandomInt();
-        boolean even = randomInt % 2 == 0;
 
         round[0] = randomInt.toString();
-        round[1] = getBoolString(even);
-    }
-
-    private String getBoolString(boolean bool) {
-        return (bool) ? "yes" : "no";
+        round[1] = Engine.getBoolString(randomInt % 2 == 0);
     }
 }
