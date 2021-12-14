@@ -12,7 +12,7 @@
 ![game Calc](/imgs/progression-game.png?raw=true)
 
 ### Prime game
-![game Calc](/imgs/progression-game.png?raw=true)
+![game Calc](/imgs/prime-game.png?raw=true)
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/fokses/java-project-lvl1/workflows/hexlet-check/badge.svg)](https://github.com/fokses/java-project-lvl1/actions)
