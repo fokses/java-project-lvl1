@@ -70,18 +70,16 @@ public class App {
     private static void startGame(int choosedGame, Scanner sc)
         throws GameFlowException, GameCreateException, ScannerException, WrongAnswerException {
 
-        Game game = null;
+        Class<?> gameClass = null;
+        String gameName = GAMES[choosedGame - 2];
 
         try {
-            Class<?> gameClass = Class.forName("hexlet.code.games." + GAMES[choosedGame - 2]);
-            game = (Game) gameClass.getDeclaredConstructor().newInstance();
+            gameClass = Class.forName("hexlet.code.games." + gameName);
         } catch (Exception e) {
             throw new GameCreateException(e.getMessage());
         }
 
-        if (game != null) {
-            Engine.startGame(game, sc);
-        }
+        Engine.startGame(gameClass, sc);
     }
 
     private static void printListOfGames() {

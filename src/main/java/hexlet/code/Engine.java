@@ -2,8 +2,7 @@ package hexlet.code;
 
 import java.util.Random;
 import java.util.Scanner;
-
-import hexlet.code.games.*;
+import java.lang.reflect.Method;
 
 public class Engine {
 
@@ -13,7 +12,7 @@ public class Engine {
     private static Random random = new Random();
     private static String playerName = "";
 
-    public static void startGame(Game game, Scanner sc)
+    public static void startGame(Class<?> game, Scanner sc)
         throws GameFlowException, ScannerException, WrongAnswerException {
 
         if (playerName.isEmpty()) {
@@ -24,7 +23,13 @@ public class Engine {
             }
         }
 
-        game.printMessageBefore();
+        try {
+            Method printMessageBefore = game.getMethod("printMessageBefore");
+            printMessageBefore.invoke(null);
+        } catch (Exception e) {
+            throw new GameFlowException(e.getMessage());
+        }
+
 
         for (int i = 0; i < MAX_RETRIES; i++) {
             startGameRound(game, sc);
@@ -33,14 +38,16 @@ public class Engine {
         System.out.println(String.format("Congratulations, %s!", playerName));
     }
 
-    private static void startGameRound(Game game, Scanner sc)
+    private static void startGameRound(Class<?> game, Scanner sc)
         throws GameFlowException, ScannerException, WrongAnswerException {
 
         String[] round = getEmptyRound();
+        Object[] args = {round};
         String answer;
 
         try {
-            game.round(round);
+            Method roundMethod = game.getDeclaredMethod("round", String[].class);
+            roundMethod.invoke(null, args);
         } catch (Exception e) {
             throw new GameFlowException(e.getMessage());
         }

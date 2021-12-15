@@ -3,14 +3,12 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 import static java.lang.Math.abs;
 
-public class GCD extends Game {
-    @Override
-    public final void printMessageBefore() {
+public class GCD {
+    public static void printMessageBefore() {
         System.out.println("Find the greatest common divisor of given numbers.");
     }
 
-    @Override
-    public final void round(String[] round) {
+    public static void round(String[] round) {
         int firstNum = Engine.getRandomInt();
         int secondNum = Engine.getRandomInt();
 

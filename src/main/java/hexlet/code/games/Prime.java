@@ -3,15 +3,13 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 import static java.lang.Math.abs;
 
-public class Prime extends Game {
+public class Prime {
 
-    @Override
-    public final void printMessageBefore() {
+    public static void printMessageBefore() {
         System.out.println("Answer 'yes' if given number is prime. Otherwise answer 'no'.");
     }
 
-    @Override
-    public final void round(String[] round) {
+    public static void round(String[] round) {
         int num = Engine.getRandomInt();
         round[0] = String.valueOf(num);
         round[1] = Engine.getBoolString(isPrime(num));
