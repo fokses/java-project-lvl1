@@ -26,11 +26,7 @@ public class Prime {
 
         int sqrt = (int) Math.floor(Math.sqrt(num));
 
-        if (num % sqrt == 0) {
-            return false;
-        }
-
-        for (int i = startFrom; i < sqrt; i = i + 2) {
+        for (int i = startFrom; i < sqrt + 1; i = i + 2) {
             if (num % i == 0) {
                 return false;
             }
