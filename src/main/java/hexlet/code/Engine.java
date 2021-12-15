@@ -91,7 +91,7 @@ public class Engine {
         try {
             if (sc.hasNext()) {
                 playerName = sc.next();
-                System.out.println("Hello, " + playerName);
+                System.out.println("Hello, " + playerName + "!");
             }
         } catch (Exception e) {
             throw new ScannerException(e.getMessage());
