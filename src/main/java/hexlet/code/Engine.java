@@ -118,19 +118,19 @@ public class Engine {
 }
 
 class ScannerException extends Exception {
-    public ScannerException(String message) {
+    ScannerException(String message) {
         super(message);
     }
 }
 
 class WrongAnswerException extends Exception {
-    public WrongAnswerException(String message) {
+    WrongAnswerException(String message) {
         super(message);
     }
 }
 
 class GameFlowException extends Exception {
-    public GameFlowException(String message) {
+    GameFlowException(String message) {
         super(message);
     }
 }

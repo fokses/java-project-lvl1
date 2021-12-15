@@ -2,7 +2,7 @@ package hexlet.code;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import hexlet.code.games.*;
+// import hexlet.code.games.Even;
 
 public class App {
     private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
@@ -95,13 +95,13 @@ public class App {
 }
 
 class GameCreateException extends Exception {
-    public GameCreateException(String message) {
+    GameCreateException(String message) {
         super(message);
     }
 }
 
 class WrongGameException extends Exception {
-    public WrongGameException(String message) {
+    WrongGameException(String message) {
         super(message);
     }
 }

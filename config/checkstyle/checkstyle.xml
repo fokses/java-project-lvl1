@@ -121,7 +121,7 @@
 
         <!-- Checks for imports                              -->
         <!-- See https://checkstyle.org/config_import.html -->
-        <!--<module name="AvoidStarImport"/>-->
+        <module name="AvoidStarImport"/>
         <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
         <module name="RedundantImport"/>
         <module name="UnusedImports">
@@ -149,7 +149,7 @@
         <!-- Modifier Checks                                    -->
         <!-- See https://checkstyle.org/config_modifiers.html -->
         <module name="ModifierOrder"/>
-        <!-- <module name="RedundantModifier"/> -->
+        <module name="RedundantModifier"/>
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See https://checkstyle.org/config_blocks.html -->
