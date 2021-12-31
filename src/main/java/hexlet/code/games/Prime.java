@@ -1,18 +1,27 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.ScannerException;
+import hexlet.code.WrongAnswerException;
+
+import java.util.Scanner;
+
 import static java.lang.Math.abs;
 
-public class Prime {
+public class Prime extends Game {
 
-    public static void printMessageBefore() {
-        System.out.println("Answer 'yes' if given number is prime. Otherwise answer 'no'.");
+    private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+
+    @Override
+    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        Engine.processGame(DESCRIPTION, sc);
     }
 
-    public static void round(String[] round) {
+    @Override
+    public final void fillRound(int i) {
         int num = Engine.getRandomInt();
-        round[0] = String.valueOf(num);
-        round[1] = Engine.getBoolString(isPrime(num));
+        Engine.setQuestion(i, String.valueOf(num));
+        Engine.setAnswer(i, Engine.getBoolString(isPrime(num)));
     }
 
     public static boolean isPrime(int num) {
@@ -20,7 +29,7 @@ public class Prime {
         num = abs(num);
 
         //0, 1, multiple 2 is not prime
-        if (num == 0 || num == 1 || num % 2 == 0) {
+        if (num == 1 || num % 2 == 0) {
             return false;
         }
 

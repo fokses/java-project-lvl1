@@ -1,16 +1,26 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.ScannerException;
+import hexlet.code.WrongAnswerException;
 
-public class Even {
-    public static void printMessageBefore() {
-        System.out.println("Answer 'yes' if the number is even, otherwise answer 'no'.");
+import java.util.Scanner;
+
+public class Even extends Game {
+
+    private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
+
+    public final void startGame(Scanner sc)
+            throws ScannerException, WrongAnswerException {
+
+        Engine.processGame(DESCRIPTION, sc);
     }
 
-    public static void round(String[] round) {
-        Integer randomInt = Engine.getRandomInt();
+    @Override
+    public final void fillRound(int i) {
+        int randomInt = Engine.getRandomInt();
 
-        round[0] = randomInt.toString();
-        round[1] = Engine.getBoolString(randomInt % 2 == 0);
+        Engine.setQuestion(i, Integer.toString(randomInt));
+        Engine.setAnswer(i, Engine.getBoolString(randomInt % 2 == 0));
     }
 }

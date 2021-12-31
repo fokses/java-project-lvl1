@@ -1,31 +1,37 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.ScannerException;
+import hexlet.code.WrongAnswerException;
 
-public class Calc {
+import java.util.Scanner;
+
+public class Calc extends Game {
 
     private static final int NUMBER_OF_SIGNS = 3;
-
-    private static char[] signs;
+    private static final String DESCRIPTION = "What is the result of the expression?";
+    private static final char[] SIGNS;
 
     static {
-        signs = new char[NUMBER_OF_SIGNS];
-        signs[0] = '+';
-        signs[1] = '-';
-        signs[2] = '*';
+        SIGNS = new char[NUMBER_OF_SIGNS];
+        SIGNS[0] = '+';
+        SIGNS[1] = '-';
+        SIGNS[2] = '*';
     }
 
-    public static void printMessageBefore() {
-        System.out.println("What is the result of the expression?");
-    }
-
-    public static void round(String[] round) {
+    @Override
+    public final void fillRound(int i) {
         int firstNum = Engine.getRandomInt();
         int secondNum = Engine.getRandomInt();
-        char sign = signs[Engine.getRandomInt(0, NUMBER_OF_SIGNS)];
+        char sign = SIGNS[Engine.getRandomInt(0, NUMBER_OF_SIGNS)];
 
-        round[0] = String.format("%d %s %d", firstNum, sign, secondNum);
-        round[1] = getCorrectAnswer(firstNum, secondNum, sign);
+        Engine.setQuestion(i, String.format("%d %s %d", firstNum, sign, secondNum));
+        Engine.setAnswer(i, getCorrectAnswer(firstNum, secondNum, sign));
+    }
+
+    @Override
+    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        Engine.processGame(DESCRIPTION, sc);
     }
 
     private static String getCorrectAnswer(int firstNum, int secondNum, char sign) {

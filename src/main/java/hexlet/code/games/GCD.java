@@ -1,19 +1,28 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.ScannerException;
+import hexlet.code.WrongAnswerException;
+
+import java.util.Scanner;
+
 import static java.lang.Math.abs;
 
-public class GCD {
-    public static void printMessageBefore() {
-        System.out.println("Find the greatest common divisor of given numbers.");
+public class GCD extends Game {
+    private static final String DESCRIPTION = "Find the greatest common divisor of given numbers.";
+
+    @Override
+    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        Engine.processGame(DESCRIPTION, sc);
     }
 
-    public static void round(String[] round) {
+    @Override
+    public final void fillRound(int i) {
         int firstNum = Engine.getRandomInt();
         int secondNum = Engine.getRandomInt();
 
-        round[0] = String.format("%d %d", firstNum, secondNum);
-        round[1] = getGCD(firstNum, secondNum).toString();
+        Engine.setQuestion(i, String.format("%d %d", firstNum, secondNum));
+        Engine.setAnswer(i, getGCD(firstNum, secondNum).toString());
     }
 
     public static Integer getGCD(int a, int b) {

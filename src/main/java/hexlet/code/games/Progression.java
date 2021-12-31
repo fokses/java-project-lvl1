@@ -1,42 +1,52 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.ScannerException;
+import hexlet.code.WrongAnswerException;
 
-public class Progression {
-    private static final int LENGTH_MIN = 5; //Длина прогрессии
+import java.util.Scanner;
+
+public class Progression extends Game {
+    private static final String DESCRIPTION = "What number is missing in the progression?";
+    private static final int LENGTH_MIN = 5; //Progression length
     private static final int LENGTH_MAX = 15;
-    private static final int STEP_MIN = 2; // Шаг прогрессии
+    private static final int STEP_MIN = 2; // Progression step
     private static final int STEP_MAX = 11;
-    private static final int START_MIN = 1; // Положение элемента
+    private static final int START_MIN = 1; // Posision of element
     private static final int START_MAX = 11;
+    private static final int LENGTH;
 
-    public static void printMessageBefore() {
-        System.out.println("What number is missing in the progression?");
+    static {
+        LENGTH = Engine.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    public static void round(String[] round) {
-        int length = Engine.getRandomInt(LENGTH_MIN, LENGTH_MAX);
-        int position = Engine.getRandomInt(1, length + 1);
+    @Override
+    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        Engine.processGame(DESCRIPTION, sc);
+    }
+
+    @Override
+    public final void fillRound(int i) {
+        int position = Engine.getRandomInt(1, LENGTH + 1);
         int start = Engine.getRandomInt(START_MIN, START_MAX);
         int step = Engine.getRandomInt(STEP_MIN, STEP_MAX);
 
         String question = "";
         String answer = "";
 
-        for (int i = 1; i <= length; i++) {
-            if (position == i) {
+        for (int j = 1; j <= LENGTH; j++) {
+            if (position == j) {
                 question += "..";
                 answer = String.valueOf(start);
             } else {
                 question += start;
             }
 
-            question += (i != length) ? " " : "";
+            question += (j != LENGTH) ? " " : "";
             start += step;
         }
 
-        round[0] = question;
-        round[1] = answer;
+        Engine.setQuestion(i, question);
+        Engine.setAnswer(i, answer);
     }
-
 }
