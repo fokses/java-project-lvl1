@@ -6,7 +6,7 @@ import hexlet.code.WrongAnswerException;
 
 import java.util.Scanner;
 
-public class Even extends Game {
+public class Even {
 
     private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
 
@@ -16,7 +16,12 @@ public class Even extends Game {
         Engine.processGame(DESCRIPTION, sc);
     }
 
-    @Override
+    public static void fillQuestions(Even game) {
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            game.fillRound(i);
+        }
+    }
+
     public final void fillRound(int i) {
         int randomInt = Engine.getRandomInt();
 

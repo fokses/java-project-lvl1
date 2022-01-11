@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.games.Game;
 import hexlet.code.games.Even;
 import hexlet.code.games.Calc;
 import hexlet.code.games.Prime;
@@ -33,54 +32,52 @@ public class Engine {
         answers[i] = value;
     }
 
-    public static void processGameChoice(int choosedGame, Scanner sc) {
+    public static void startGame(String gameName, Scanner sc)
+            throws GameCreateException, ScannerException, WrongAnswerException {
 
-        switch (choosedGame) {
-            case (0):
-                break;
-            case (1):
-                try {
-                    setName(sc);
-                } catch (ScannerException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-            default:
-                if (choosedGame < 0 || choosedGame > App.NUMBER_OF_GAMES + 2) {
-                    System.out.println("Wrong game choice");
-                    return;
-                }
+        Object game = null;
 
-                try {
-                    startGame(App.GAMES[choosedGame - 2], sc);
-                } catch (GameCreateException | ScannerException e) { //game flow error
-                    System.out.println("There was an error during execution the game");
-                    System.out.println(e.getMessage());
-                } catch (WrongAnswerException e) { //user input wrong answer
-                    //without process
-                } catch (Exception e) { //Smth other
-                    System.out.println(e.getMessage());
-                }
+        try {
+            switch (gameName) {
+                case ("Even"):
+                    Even even = new Even();
+                    even.fillQuestions(even);
+                    even.startGame(sc);
+                    break;
+                case ("Calc"):
+                    Calc calc = new Calc();
+                    calc.fillQuestions(calc);
+                    calc.startGame(sc);
+                    break;
+                case ("GCD"):
+                    GCD gcd = new GCD();
+                    gcd.fillQuestions(gcd);
+                    gcd.startGame(sc);
+                    break;
+                case ("Prime"):
+                    Prime prime = new Prime();
+                    prime.fillQuestions(prime);
+                    prime.startGame(sc);
+                    break;
+                case ("Progression"):
+                    Progression progression = new Progression();
+                    progression.fillQuestions(progression);
+                    progression.startGame(sc);
+                    break;
+                default:
+                    throw new GameCreateException("Game not found");
+            }
+        } catch (GameCreateException | ScannerException e) { //game flow error
+            System.out.println("There was an error during execution the game");
+            System.out.println(e.getMessage());
+        } catch (WrongAnswerException e) { //user input wrong answer
+            //without process
+        } catch (Exception e) { //Something else
+            System.out.println(e.getMessage());
         }
     }
 
-    private static void startGame(String gameName, Scanner sc)
-            throws GameFlowException, GameCreateException, ScannerException, WrongAnswerException {
-
-        Game game = switch (gameName) {
-            case ("Even") -> new Even();
-            case ("Calc") -> new Calc();
-            case ("GCD") -> new GCD();
-            case ("Prime") -> new Prime();
-            case ("Progression") -> new Progression();
-            default -> throw new GameCreateException("Game not found");
-        };
-
-        fillQuestions(game);
-        game.startGame(sc);
-    }
-
-    private static void fillQuestions(Game game) {
+    private static void fillQuestions(Even game) {
         for (int i = 0; i < Engine.MAX_RETRIES; i++) {
             game.fillRound(i);
         }
@@ -164,9 +161,3 @@ public class Engine {
         System.out.printf(wrongAnswerLetsTryAgain, playerName);
     }
 }
-
-//class WrongGameException extends Exception {
-//    WrongGameException(String message) {
-//        super(message);
-//    }
-//}

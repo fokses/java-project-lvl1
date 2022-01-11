@@ -6,7 +6,7 @@ import hexlet.code.WrongAnswerException;
 
 import java.util.Scanner;
 
-public class Progression extends Game {
+public class Progression {
     private static final String DESCRIPTION = "What number is missing in the progression?";
     private static final int LENGTH_MIN = 5; //Progression length
     private static final int LENGTH_MAX = 15;
@@ -20,12 +20,10 @@ public class Progression extends Game {
         LENGTH = Engine.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    @Override
     public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
         Engine.processGame(DESCRIPTION, sc);
     }
 
-    @Override
     public final void fillRound(int i) {
         int position = Engine.getRandomInt(1, LENGTH + 1);
         int start = Engine.getRandomInt(START_MIN, START_MAX);
@@ -48,5 +46,11 @@ public class Progression extends Game {
 
         Engine.setQuestion(i, question);
         Engine.setAnswer(i, answer);
+    }
+
+    public static void fillQuestions(Progression game) {
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            game.fillRound(i);
+        }
     }
 }

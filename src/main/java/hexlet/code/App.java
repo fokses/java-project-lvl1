@@ -4,7 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
-    public static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
+    private static final int CODE_EXIT = 0;
+    private static final int CODE_SETNAME = 1;
+    private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
     public static final int NUMBER_OF_GAMES;
 
     static {
@@ -12,7 +14,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        int choosedGame;
+        int chosenGame;
 
         Scanner sc = new Scanner(System.in);
 
@@ -21,7 +23,7 @@ public class App {
         System.out.print("Your choice: ");
 
         try {
-            choosedGame = sc.nextInt();
+            chosenGame = sc.nextInt();
         } catch (Exception e) {
             if (e instanceof InputMismatchException) {
                 System.out.println("You have to input numbers only!");
@@ -33,9 +35,40 @@ public class App {
             return; //There is no reason to continue
         }
 
-        Engine.processGameChoice(choosedGame, sc);
+        processGameChoice(chosenGame, sc);
 
         sc.close();
+    }
+
+    private static void processGameChoice(int chosenGame, Scanner sc) {
+
+        switch (chosenGame) {
+            case (CODE_EXIT):
+                break;
+            case (CODE_SETNAME):
+                try {
+                    Engine.setName(sc);
+                } catch (ScannerException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            default:
+                if (chosenGame < 0 || chosenGame > App.NUMBER_OF_GAMES + 2) {
+                    System.out.println("Wrong game choice");
+                    return;
+                }
+
+                try {
+                    Engine.startGame(App.GAMES[chosenGame - 2], sc);
+                } catch (GameCreateException | ScannerException e) { //game flow error
+                    System.out.println("There was an error during execution the game");
+                    System.out.println(e.getMessage());
+                } catch (WrongAnswerException e) { //user input wrong answer
+                    //without process
+                } catch (Exception e) { //Something else
+                    System.out.println(e.getMessage());
+                }
+        }
     }
 
     private static void printListOfGames() {

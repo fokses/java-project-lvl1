@@ -8,20 +8,24 @@ import java.util.Scanner;
 
 import static java.lang.Math.abs;
 
-public class Prime extends Game {
+public class Prime {
 
     private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
-    @Override
     public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
         Engine.processGame(DESCRIPTION, sc);
     }
 
-    @Override
     public final void fillRound(int i) {
         int num = Engine.getRandomInt();
         Engine.setQuestion(i, String.valueOf(num));
         Engine.setAnswer(i, Engine.getBoolString(isPrime(num)));
+    }
+
+    public static void fillQuestions(Prime game) {
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            game.fillRound(i);
+        }
     }
 
     public static boolean isPrime(int num) {

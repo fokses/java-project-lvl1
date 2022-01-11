@@ -8,21 +8,25 @@ import java.util.Scanner;
 
 import static java.lang.Math.abs;
 
-public class GCD extends Game {
+public class GCD {
     private static final String DESCRIPTION = "Find the greatest common divisor of given numbers.";
 
-    @Override
     public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
         Engine.processGame(DESCRIPTION, sc);
     }
 
-    @Override
     public final void fillRound(int i) {
         int firstNum = Engine.getRandomInt();
         int secondNum = Engine.getRandomInt();
 
         Engine.setQuestion(i, String.format("%d %d", firstNum, secondNum));
         Engine.setAnswer(i, getGCD(firstNum, secondNum).toString());
+    }
+
+    public static void fillQuestions(GCD game) {
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            game.fillRound(i);
+        }
     }
 
     public static Integer getGCD(int a, int b) {

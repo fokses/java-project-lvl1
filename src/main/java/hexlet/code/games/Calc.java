@@ -6,7 +6,7 @@ import hexlet.code.WrongAnswerException;
 
 import java.util.Scanner;
 
-public class Calc extends Game {
+public class Calc {
 
     private static final int NUMBER_OF_SIGNS = 3;
     private static final String DESCRIPTION = "What is the result of the expression?";
@@ -19,7 +19,6 @@ public class Calc extends Game {
         SIGNS[2] = '*';
     }
 
-    @Override
     public final void fillRound(int i) {
         int firstNum = Engine.getRandomInt();
         int secondNum = Engine.getRandomInt();
@@ -29,7 +28,12 @@ public class Calc extends Game {
         Engine.setAnswer(i, getCorrectAnswer(firstNum, secondNum, sign));
     }
 
-    @Override
+    public static void fillQuestions(Calc game) {
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            game.fillRound(i);
+        }
+    }
+
     public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
         Engine.processGame(DESCRIPTION, sc);
     }
