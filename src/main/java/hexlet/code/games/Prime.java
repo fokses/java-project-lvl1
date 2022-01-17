@@ -1,6 +1,8 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.Game;
+import hexlet.code.Helper;
 import hexlet.code.ScannerException;
 import hexlet.code.WrongAnswerException;
 
@@ -12,23 +14,27 @@ public class Prime {
 
     private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
-    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
-        Engine.processGame(DESCRIPTION, sc);
+    public static void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        fillQuestions(Engine.MAX_RETRIES);
+        Engine.processGame(DESCRIPTION, Game.getQuestions(), Game.getAnswers(), sc);
     }
 
-    public final void fillRound(int i) {
-        int num = Engine.getRandomInt();
-        Engine.setQuestion(i, String.valueOf(num));
-        Engine.setAnswer(i, Engine.getBoolString(isPrime(num)));
-    }
-
-    public static void fillQuestions(Prime game) {
-        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
-            game.fillRound(i);
+    private static void fillQuestions(int numOfQuestions) {
+        for (int i = 0; i < numOfQuestions; i++) {
+            fillRound(i);
         }
     }
 
-    public static boolean isPrime(int num) {
+    private static void fillRound(int i) {
+        int num = Helper.getRandomInt();
+
+        String question = Integer.toString(num);
+        String answer = Helper.getBoolString(isPrime(num));
+
+        Game.setRound(i, question, answer);
+    }
+
+    private static boolean isPrime(int num) {
         final int startFrom = 3; //because linter complain of magic number
         num = abs(num);
 

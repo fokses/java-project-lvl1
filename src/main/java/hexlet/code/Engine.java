@@ -6,7 +6,6 @@ import hexlet.code.games.Prime;
 import hexlet.code.games.GCD;
 import hexlet.code.games.Progression;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Engine {
@@ -14,23 +13,7 @@ public class Engine {
     public static final int MIN_INT = 1; // getRandomInt()
     public static final int MAX_INT = 100; // getRandomInt()
     public static final int MAX_RETRIES = 3; //game rounds
-    private static String[] questions;
-    private static String[] answers;
-    private static final Random RANDOM = new Random();
     private static String playerName = "";
-
-    static {
-        questions = new String[MAX_RETRIES];
-        answers = new String[MAX_RETRIES];
-    }
-
-    public static void setQuestion(int i, String value) {
-        questions[i] = value;
-    }
-
-    public static void setAnswer(int i, String value) {
-        answers[i] = value;
-    }
 
     public static void startGame(String gameName, Scanner sc)
             throws GameCreateException, ScannerException, WrongAnswerException {
@@ -40,29 +23,19 @@ public class Engine {
         try {
             switch (gameName) {
                 case ("Even"):
-                    Even even = new Even();
-                    even.fillQuestions(even);
-                    even.startGame(sc);
+                    Even.startGame(sc);
                     break;
                 case ("Calc"):
-                    Calc calc = new Calc();
-                    calc.fillQuestions(calc);
-                    calc.startGame(sc);
+                    Calc.startGame(sc);
                     break;
                 case ("GCD"):
-                    GCD gcd = new GCD();
-                    gcd.fillQuestions(gcd);
-                    gcd.startGame(sc);
+                    GCD.startGame(sc);
                     break;
                 case ("Prime"):
-                    Prime prime = new Prime();
-                    prime.fillQuestions(prime);
-                    prime.startGame(sc);
+                    Prime.startGame(sc);
                     break;
                 case ("Progression"):
-                    Progression progression = new Progression();
-                    progression.fillQuestions(progression);
-                    progression.startGame(sc);
+                    Progression.startGame(sc);
                     break;
                 default:
                     throw new GameCreateException("Game not found");
@@ -77,13 +50,7 @@ public class Engine {
         }
     }
 
-    private static void fillQuestions(Even game) {
-        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
-            game.fillRound(i);
-        }
-    }
-
-    public static void processGame(String description, Scanner sc)
+    public static void processGame(String description, String[] questions, String[] answers, Scanner sc)
         throws ScannerException, WrongAnswerException {
 
         if (playerName.isEmpty()) {
@@ -127,14 +94,6 @@ public class Engine {
         }
     }
 
-    public static int getRandomInt() {
-        return getRandomInt(MIN_INT, MAX_INT);
-    }
-
-    public static int getRandomInt(int min, int max) {
-        return min + RANDOM.nextInt(max - min);
-    }
-
     public static void setName(Scanner sc) throws ScannerException {
         System.out.println("Welcome to the Brain Games!");
         System.out.println("May I have your name?");
@@ -148,10 +107,6 @@ public class Engine {
             throw new ScannerException(e.getMessage());
         }
 
-    }
-
-    public static String getBoolString(boolean bool) {
-        return (bool) ? "yes" : "no";
     }
 
     private static void printWrongAnswer(String wrongAnswer, String correctAnswer) {

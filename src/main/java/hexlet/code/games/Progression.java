@@ -1,6 +1,8 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
+import hexlet.code.Game;
+import hexlet.code.Helper;
 import hexlet.code.ScannerException;
 import hexlet.code.WrongAnswerException;
 
@@ -17,25 +19,37 @@ public class Progression {
     private static final int LENGTH;
 
     static {
-        LENGTH = Engine.getRandomInt(LENGTH_MIN, LENGTH_MAX);
+        LENGTH = Helper.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    public final void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
-        Engine.processGame(DESCRIPTION, sc);
+    public static void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
+        fillQuestions(Engine.MAX_RETRIES);
+        Engine.processGame(DESCRIPTION, Game.getQuestions(), Game.getAnswers(), sc);
     }
 
-    public final void fillRound(int i) {
-        int position = Engine.getRandomInt(1, LENGTH + 1);
-        int start = Engine.getRandomInt(START_MIN, START_MAX);
-        int step = Engine.getRandomInt(STEP_MIN, STEP_MAX);
+    private static void fillQuestions(int numOfQuestions) {
+        for (int i = 0; i < numOfQuestions; i++) {
+            fillRound(i);
+        }
+    }
 
+    private static void fillRound(int i) {
+        int position = Helper.getRandomInt(1, LENGTH + 1);
+        int start = Helper.getRandomInt(START_MIN, START_MAX);
+        int step = Helper.getRandomInt(STEP_MIN, STEP_MAX);
+
+        String question = getQuestion(start, step, LENGTH, position);
+        String answer = Integer.toString(start + step * (position - 1));
+
+        Game.setRound(i, question, answer);
+    }
+
+    private static String getQuestion(int start, int step, int length, int position) {
         String question = "";
-        String answer = "";
 
         for (int j = 1; j <= LENGTH; j++) {
             if (position == j) {
                 question += "..";
-                answer = String.valueOf(start);
             } else {
                 question += start;
             }
@@ -44,13 +58,6 @@ public class Progression {
             start += step;
         }
 
-        Engine.setQuestion(i, question);
-        Engine.setAnswer(i, answer);
-    }
-
-    public static void fillQuestions(Progression game) {
-        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
-            game.fillRound(i);
-        }
+        return question;
     }
 }
