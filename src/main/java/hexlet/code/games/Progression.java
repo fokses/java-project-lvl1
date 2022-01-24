@@ -1,10 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import hexlet.code.Game;
 import hexlet.code.Helper;
-import hexlet.code.ScannerException;
-import hexlet.code.WrongAnswerException;
 
 import java.util.Scanner;
 
@@ -22,26 +19,21 @@ public class Progression {
         LENGTH = Helper.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    public static void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
-        fillQuestions(Engine.MAX_RETRIES);
-        Engine.processGame(DESCRIPTION, Game.getQuestions(), Game.getAnswers(), sc);
+    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
     }
 
-    private static void fillQuestions(int numOfQuestions) {
-        for (int i = 0; i < numOfQuestions; i++) {
-            fillRound(i);
-        }
-    }
+    public static String[] getRound(int i) {
+        String[] round = new String[2];
 
-    private static void fillRound(int i) {
         int position = Helper.getRandomInt(1, LENGTH + 1);
         int start = Helper.getRandomInt(START_MIN, START_MAX);
         int step = Helper.getRandomInt(STEP_MIN, STEP_MAX);
 
-        String question = getQuestion(start, step, LENGTH, position);
-        String answer = Integer.toString(start + step * (position - 1));
+        round[0] = getQuestion(start, step, LENGTH, position);
+        round[1] = Integer.toString(start + step * (position - 1));
 
-        Game.setRound(i, question, answer);
+        return round;
     }
 
     private static String getQuestion(int start, int step, int length, int position) {

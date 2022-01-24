@@ -1,10 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import hexlet.code.Game;
 import hexlet.code.Helper;
-import hexlet.code.ScannerException;
-import hexlet.code.WrongAnswerException;
 
 import java.util.Scanner;
 
@@ -12,25 +9,18 @@ public class Even {
 
     private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
 
-    public static void startGame(Scanner sc)
-            throws ScannerException, WrongAnswerException {
-
-        fillQuestions(Engine.MAX_RETRIES);
-        Engine.processGame(DESCRIPTION, Game.getQuestions(), Game.getAnswers(), sc);
+    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
     }
 
-    private static void fillQuestions(int numOfQuestions) {
-        for (int i = 0; i < numOfQuestions; i++) {
-            fillRound(i);
-        }
-    }
+    public static String[] getRound(int i) {
+        String[] round = new String[2];
 
-    private static void fillRound(int i) {
         int randomInt = Helper.getRandomInt();
 
-        String question = Integer.toString(randomInt);
-        String answer = Helper.getBoolString(randomInt % 2 == 0);
+        round[0] = Integer.toString(randomInt);
+        round[1] = Helper.getBoolString(randomInt % 2 == 0);
 
-        Game.setRound(i, question, answer);
+        return round;
     }
 }

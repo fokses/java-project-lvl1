@@ -1,6 +1,12 @@
 package hexlet.code;
 
+import hexlet.code.games.Even;
+import hexlet.code.games.Calc;
+import hexlet.code.games.Prime;
+import hexlet.code.games.GCD;
+import hexlet.code.games.Progression;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class App {
@@ -47,8 +53,9 @@ public class App {
                 break;
             case (CODE_SETNAME):
                 try {
-                    Engine.setName(sc);
-                } catch (ScannerException e) {
+                    getName(sc);
+                } catch (Exception e) {
+                    System.out.println("Error while setting name: ");
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -58,17 +65,58 @@ public class App {
                     return;
                 }
 
-                try {
-                    Engine.startGame(App.GAMES[chosenGame - 2], sc);
-                } catch (GameCreateException | ScannerException e) { //game flow error
-                    System.out.println("There was an error during execution the game");
-                    System.out.println(e.getMessage());
-                } catch (WrongAnswerException e) { //user input wrong answer
-                    //without process
-                } catch (Exception e) { //Something else
-                    System.out.println(e.getMessage());
-                }
+                startGame(App.GAMES[chosenGame - 2], sc);
         }
+    }
+
+    private static void startGame(String gameName, Scanner sc) {
+        try {
+            String playerName = getName(sc);
+
+            int maxRetries = Engine.MAX_RETRIES;
+
+            String[][] rounds = Helper.getRounds(maxRetries, gameName);
+
+            switch (gameName) {
+                case ("Even"):
+                    Even.startGame(rounds, playerName, sc);
+                    break;
+                case ("Calc"):
+                    Calc.startGame(rounds, playerName, sc);
+                    break;
+                case ("GCD"):
+                    GCD.startGame(rounds, playerName, sc);
+                    break;
+                case ("Prime"):
+                    Prime.startGame(rounds, playerName, sc);
+                    break;
+                case ("Progression"):
+                    Progression.startGame(rounds, playerName, sc);
+                    break;
+                default:
+                    System.out.println("Game not found");
+            }
+        } catch (IllegalStateException | NoSuchElementException e) { //user wrong input
+            System.out.println("There was an error during read the input");
+            System.out.println(e.getMessage());
+        } catch (RuntimeException e) { //wrong answer
+            //without process
+        } catch (Exception e) { //Something else
+            System.out.println("There was an error during execution the game");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static String getName(Scanner sc) throws Exception {
+        String playerName;
+
+        System.out.println("Welcome to the Brain Games!");
+        System.out.println("May I have your name?");
+
+        playerName = sc.next();
+
+        System.out.println("Hello, " + playerName + "!");
+        return playerName;
     }
 
     private static void printListOfGames() {
@@ -80,11 +128,5 @@ public class App {
         }
 
         System.out.println("0 - Exit");
-    }
-}
-
-class GameCreateException extends Exception {
-    GameCreateException(String message) {
-        super(message);
     }
 }

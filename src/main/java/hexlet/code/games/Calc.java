@@ -1,10 +1,7 @@
 package hexlet.code.games;
 
 import hexlet.code.Engine;
-import hexlet.code.Game;
 import hexlet.code.Helper;
-import hexlet.code.ScannerException;
-import hexlet.code.WrongAnswerException;
 
 
 import java.util.Scanner;
@@ -12,28 +9,24 @@ import java.util.Scanner;
 public class Calc {
 
     private static final String DESCRIPTION = "What is the result of the expression?";
+
+    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
+    }
+
     private static final char[] SIGNS = new char[] {'+', '-', '*'};
 
-    public static void startGame(Scanner sc) throws ScannerException, WrongAnswerException {
-        fillQuestions(Engine.MAX_RETRIES);
-        Engine.processGame(DESCRIPTION, Game.getQuestions(), Game.getAnswers(), sc);
-    }
+    public static String[] getRound(int i) {
+        String[] round = new String[2];
 
-    public static void fillQuestions(int numOfQuestions) {
-        for (int i = 0; i < numOfQuestions; i++) {
-            fillRound(i);
-        }
-    }
-
-    public static void fillRound(int i) {
         int firstNum = Helper.getRandomInt();
         int secondNum = Helper.getRandomInt();
         char sign = SIGNS[Helper.getRandomInt(0, SIGNS.length)];
 
-        String question = String.format("%d %s %d", firstNum, sign, secondNum);
-        String answer = getCorrectAnswer(firstNum, secondNum, sign);
+        round[0] = String.format("%d %s %d", firstNum, sign, secondNum);
+        round[1] = getCorrectAnswer(firstNum, secondNum, sign);
 
-        Game.setRound(i, question, answer);
+        return round;
     }
 
     private static String getCorrectAnswer(int firstNum, int secondNum, char sign) {
