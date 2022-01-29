@@ -24,34 +24,29 @@ public class Helper {
     }
 
     public static String[][] getRounds(int numOfQuestions, String gameName) throws Exception {
-
         String[][] rounds = new String[2][numOfQuestions];
-        String[] round;
 
         for (int i = 0; i < numOfQuestions; i++) {
             switch (gameName) {
                 case ("Even"):
-                    round = Even.getRound(i);
+                    Even.setRound(rounds, i);
                     break;
                 case ("Calc"):
-                    round = Calc.getRound(i);
+                    Calc.setRound(rounds, i);
                     break;
                 case ("GCD"):
-                    round = GCD.getRound(i);
+                    GCD.setRound(rounds, i);
                     break;
                 case ("Prime"):
-                    round = Prime.getRound(i);
+                    Prime.setRound(rounds, i);
                     break;
                 case ("Progression"):
-                    round = Progression.getRound(i);
+                    Progression.setRound(rounds, i);
                     break;
                 default:
                     System.out.println("Game not found");
                     throw new RuntimeException();
             }
-
-            rounds[0][i] = round[0];
-            rounds[1][i] = round[1];
         }
 
         return rounds;

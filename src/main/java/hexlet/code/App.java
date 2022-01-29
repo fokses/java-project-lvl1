@@ -53,7 +53,7 @@ public class App {
                 break;
             case (CODE_SETNAME):
                 try {
-                    getName(sc);
+                    Engine.processGame("", null, sc); //just say hello
                 } catch (Exception e) {
                     System.out.println("Error while setting name: ");
                     System.out.println(e.getMessage());
@@ -71,27 +71,25 @@ public class App {
 
     private static void startGame(String gameName, Scanner sc) {
         try {
-            String playerName = getName(sc);
-
             int maxRetries = Engine.MAX_RETRIES;
 
             String[][] rounds = Helper.getRounds(maxRetries, gameName);
 
             switch (gameName) {
                 case ("Even"):
-                    Even.startGame(rounds, playerName, sc);
+                    Even.startGame(rounds, sc);
                     break;
                 case ("Calc"):
-                    Calc.startGame(rounds, playerName, sc);
+                    Calc.startGame(rounds, sc);
                     break;
                 case ("GCD"):
-                    GCD.startGame(rounds, playerName, sc);
+                    GCD.startGame(rounds, sc);
                     break;
                 case ("Prime"):
-                    Prime.startGame(rounds, playerName, sc);
+                    Prime.startGame(rounds, sc);
                     break;
                 case ("Progression"):
-                    Progression.startGame(rounds, playerName, sc);
+                    Progression.startGame(rounds, sc);
                     break;
                 default:
                     System.out.println("Game not found");
@@ -105,18 +103,6 @@ public class App {
             System.out.println("There was an error during execution the game");
             System.out.println(e.getMessage());
         }
-    }
-
-    private static String getName(Scanner sc) throws Exception {
-        String playerName;
-
-        System.out.println("Welcome to the Brain Games!");
-        System.out.println("May I have your name?");
-
-        playerName = sc.next();
-
-        System.out.println("Hello, " + playerName + "!");
-        return playerName;
     }
 
     private static void printListOfGames() {

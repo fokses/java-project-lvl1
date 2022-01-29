@@ -10,20 +10,16 @@ import static java.lang.Math.abs;
 public class GCD {
     private static final String DESCRIPTION = "Find the greatest common divisor of given numbers.";
 
-    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
-        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
+    public static void startGame(String[][] rounds, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds, sc);
     }
 
-    public static String[] getRound(int i) {
-        String[] round = new String[2];
-
+    public static void setRound(String[][] rounds, int i) {
         int firstNum = Helper.getRandomInt();
         int secondNum = Helper.getRandomInt();
 
-        round[0] = String.format("%d %d", firstNum, secondNum);
-        round[1] = getGCD(firstNum, secondNum).toString();
-
-        return round;
+        rounds[0][i] = String.format("%d %d", firstNum, secondNum);
+        rounds[1][i] = getGCD(firstNum, secondNum).toString();
     }
 
     private static Integer getGCD(int a, int b) {

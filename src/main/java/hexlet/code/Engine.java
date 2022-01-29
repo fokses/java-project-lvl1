@@ -8,22 +8,36 @@ public class Engine {
     public static final int MAX_INT = 100; // getRandomInt()
     protected static final int MAX_RETRIES = 3; //game rounds
 
-    public static void processGame(String description, String[] questions, String[] answers,
-                                   String playerName, Scanner sc)
-        throws Exception {
+    public static void processGame(String description, String[][] roundsOfGame, Scanner sc)
+            throws Exception {
+
+        String playerName = getPlayerName(sc);
+
+        if (roundsOfGame == null) { //set name and exit
+            return;
+        }
+
+        String[] questions = roundsOfGame[0];
+        String[] answers = roundsOfGame[1];
+        boolean getWrongAnswer = false;
 
         if (!description.isEmpty()) {
             System.out.println(description);
         }
 
         for (int i = 0; i < MAX_RETRIES; i++) {
-            processGameRound(questions[i], answers[i], playerName, sc);
+            getWrongAnswer = !processGameRound(questions[i], answers[i], playerName, sc);
+            if (getWrongAnswer) {
+                break;
+            }
         }
 
-        System.out.printf("Congratulations, %s!\n", playerName);
+        if (!getWrongAnswer) {
+            System.out.printf("Congratulations, %s!\n", playerName);
+        }
     }
 
-    private static void processGameRound(String question, String correctAnswer, String playerName, Scanner sc)
+    private static boolean processGameRound(String question, String correctAnswer, String playerName, Scanner sc)
         throws Exception {
 
         System.out.printf("Question: %s\n", question);
@@ -33,10 +47,23 @@ public class Engine {
 
         if (answer.equals(correctAnswer)) {
             System.out.println("Correct!");
+            return true;
         } else {
             printWrongAnswer(answer, correctAnswer, playerName);
-            throw new RuntimeException();
+            return false;
         }
+    }
+
+    private static String getPlayerName(Scanner sc) throws Exception {
+        String playerName;
+
+        System.out.println("Welcome to the Brain Games!");
+        System.out.println("May I have your name?");
+
+        playerName = sc.next();
+
+        System.out.println("Hello, " + playerName + "!");
+        return playerName;
     }
 
     private static void printWrongAnswer(String wrongAnswer, String correctAnswer, String playerName) {

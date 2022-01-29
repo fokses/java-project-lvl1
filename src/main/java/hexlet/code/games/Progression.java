@@ -19,37 +19,40 @@ public class Progression {
         LENGTH = Helper.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
-        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
+    public static void startGame(String[][] rounds, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds, sc);
     }
 
-    public static String[] getRound(int i) {
-        String[] round = new String[2];
-
+    public static void setRound(String[][] rounds, int i) {
         int position = Helper.getRandomInt(1, LENGTH + 1);
         int start = Helper.getRandomInt(START_MIN, START_MAX);
         int step = Helper.getRandomInt(STEP_MIN, STEP_MAX);
 
-        round[0] = getQuestion(start, step, LENGTH, position);
-        round[1] = Integer.toString(start + step * (position - 1));
-
-        return round;
+        rounds[0][i] = getQuestion(start, step, LENGTH, position - 1);
+        rounds[1][i] = Integer.toString(start + step * (position - 1));
     }
 
     private static String getQuestion(int start, int step, int length, int position) {
         String question = "";
 
-        for (int j = 1; j <= LENGTH; j++) {
-            if (position == j) {
-                question += "..";
-            } else {
-                question += start;
-            }
+        Integer[] progression = getProgression(start, step, length);
 
-            question += (j != LENGTH) ? " " : "";
-            start += step;
+        for (int i = 0; i < progression.length; i++) {
+            question += (i == position) ? ".." : progression[i].toString();
+            question += (i != progression.length - 1) ? " " : "";
         }
 
         return question;
+    }
+
+    private static Integer[] getProgression(int start, int step, int length) {
+        Integer[] progression = new Integer[length];
+
+        for (int i = 0; i < length; i++) {
+            progression[i] = start;
+            start += step;
+        }
+
+        return progression;
     }
 }

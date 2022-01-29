@@ -11,19 +11,16 @@ public class Prime {
 
     private static final String DESCRIPTION = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
 
-    public static void startGame(String[][] rounds, String playerName, Scanner sc) throws Exception {
-        Engine.processGame(DESCRIPTION, rounds[0], rounds[1], playerName, sc);
+    public static void startGame(String[][] rounds, Scanner sc) throws Exception {
+        Engine.processGame(DESCRIPTION, rounds, sc);
     }
 
-    public static String[] getRound(int i) {
-        String[] round = new String[2];
-
+    public static void setRound(String[][] rounds, int i) {
         int num = Helper.getRandomInt();
 
-        round[0] = Integer.toString(num);
-        round[1] = Helper.getBoolString(isPrime(num));
+        rounds[0][i] = Integer.toString(num);
+        rounds[1][i] = Helper.getBoolString(isPrime(num));
 
-        return round;
     }
 
     private static boolean isPrime(int num) {
