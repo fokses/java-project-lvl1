@@ -3,14 +3,18 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 import hexlet.code.Helper;
 
-import java.util.Scanner;
-
 public class Even {
 
     private static final String DESCRIPTION = "Answer 'yes' if the number is even, otherwise answer 'no'.";
 
-    public static void startGame(String[][] rounds, Scanner sc) throws Exception {
-        Engine.processGame(DESCRIPTION, rounds, sc);
+    public static void startGame() {
+        String[][] rounds = new String[2][Engine.MAX_RETRIES];
+
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            setRound(rounds, i);
+        }
+
+        Engine.processGame(DESCRIPTION, rounds);
     }
 
     public static void setRound(String[][] rounds, int i) {

@@ -6,7 +6,6 @@ import hexlet.code.games.Prime;
 import hexlet.code.games.GCD;
 import hexlet.code.games.Progression;
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class App {
@@ -37,71 +36,52 @@ public class App {
                 System.out.println(e.getMessage());
             }
 
-            sc.close();
             return; //There is no reason to continue
         }
 
-        processGameChoice(chosenGame, sc);
-
+        processGameChoice(chosenGame);
         sc.close();
     }
 
-    private static void processGameChoice(int chosenGame, Scanner sc) {
+    private static void processGameChoice(int chosenGame) {
 
         switch (chosenGame) {
             case (CODE_EXIT):
-                break;
+                return;
             case (CODE_SETNAME):
-                try {
-                    Engine.processGame("", null, sc); //just say hello
-                } catch (Exception e) {
-                    System.out.println("Error while setting name: ");
-                    System.out.println(e.getMessage());
-                }
+                Engine.processGame("", null); //just say hello
                 break;
             default:
-                if (chosenGame < 0 || chosenGame > App.NUMBER_OF_GAMES + 2) {
-                    System.out.println("Wrong game choice");
-                    return;
-                }
-
-                startGame(App.GAMES[chosenGame - 2], sc);
+                startGame(chosenGame);
         }
     }
 
-    private static void startGame(String gameName, Scanner sc) {
-        try {
-            int maxRetries = Engine.MAX_RETRIES;
+    private static void startGame(int chosenGame) {
+        if (chosenGame < 0 || chosenGame > App.NUMBER_OF_GAMES + 2) {
+            System.out.println("Wrong game choice");
+            return;
+        }
 
-            String[][] rounds = Helper.getRounds(maxRetries, gameName);
+        String gameName = App.GAMES[chosenGame - 2];
 
-            switch (gameName) {
-                case ("Even"):
-                    Even.startGame(rounds, sc);
-                    break;
-                case ("Calc"):
-                    Calc.startGame(rounds, sc);
-                    break;
-                case ("GCD"):
-                    GCD.startGame(rounds, sc);
-                    break;
-                case ("Prime"):
-                    Prime.startGame(rounds, sc);
-                    break;
-                case ("Progression"):
-                    Progression.startGame(rounds, sc);
-                    break;
-                default:
-                    System.out.println("Game not found");
-            }
-        } catch (IllegalStateException | NoSuchElementException e) { //user wrong input
-            System.out.println("There was an error during read the input");
-            System.out.println(e.getMessage());
-        } catch (RuntimeException e) { //wrong answer
-            //without process
-        } catch (Exception e) { //Something else
-            System.out.println("There was an error during execution the game");
-            System.out.println(e.getMessage());
+        switch (gameName) {
+            case ("Even"):
+                Even.startGame();
+                break;
+            case ("Calc"):
+                Calc.startGame();
+                break;
+            case ("GCD"):
+                GCD.startGame();
+                break;
+            case ("Prime"):
+                Prime.startGame();
+                break;
+            case ("Progression"):
+                Progression.startGame();
+                break;
+            default:
+                System.out.println("Game not found");
         }
     }
 

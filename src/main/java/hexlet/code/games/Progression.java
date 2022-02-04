@@ -3,8 +3,6 @@ package hexlet.code.games;
 import hexlet.code.Engine;
 import hexlet.code.Helper;
 
-import java.util.Scanner;
-
 public class Progression {
     private static final String DESCRIPTION = "What number is missing in the progression?";
     private static final int LENGTH_MIN = 5; //Progression length
@@ -19,8 +17,14 @@ public class Progression {
         LENGTH = Helper.getRandomInt(LENGTH_MIN, LENGTH_MAX);
     }
 
-    public static void startGame(String[][] rounds, Scanner sc) throws Exception {
-        Engine.processGame(DESCRIPTION, rounds, sc);
+    public static void startGame()  {
+        String[][] rounds = new String[2][Engine.MAX_RETRIES];
+
+        for (int i = 0; i < Engine.MAX_RETRIES; i++) {
+            setRound(rounds, i);
+        }
+
+        Engine.processGame(DESCRIPTION, rounds);
     }
 
     public static void setRound(String[][] rounds, int i) {
