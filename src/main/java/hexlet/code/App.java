@@ -56,13 +56,16 @@ public class App {
         }
     }
 
-    private static void startGame(int chosenGame) {
+    private static String getGameName(int chosenGame) {
         if (chosenGame < 0 || chosenGame > App.NUMBER_OF_GAMES + 2) {
-            System.out.println("Wrong game choice");
-            return;
+            return "";
         }
 
-        String gameName = App.GAMES[chosenGame - 2];
+        return App.GAMES[chosenGame - 2];
+    }
+
+    private static void startGame(int chosenGame) {
+        String gameName = getGameName(chosenGame);
 
         switch (gameName) {
             case ("Even"):
@@ -81,7 +84,7 @@ public class App {
                 Progression.startGame();
                 break;
             default:
-                System.out.println("Game not found");
+                System.out.println("Wrong game choice");
         }
     }
 
