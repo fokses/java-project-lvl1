@@ -26,6 +26,10 @@ public class Engine {
             return;
         }
 
+        processGameRounds(description, roundsOfGame, playerName, sc);
+    }
+
+    private static void processGameRounds(String description, String[][] roundsOfGame, String playerName, Scanner sc) {
         String[] questions = roundsOfGame[0];
         String[] answers = roundsOfGame[1];
         boolean getWrongAnswer = false;
