@@ -13,7 +13,7 @@ public class Helper {
 
     public static void printGreeting(String playerName) {
         if (playerName != null) {
-            System.out.printf("Hello, %1!", playerName);
+            System.out.printf("Hello, %s!\n", playerName);
         }
     }
 

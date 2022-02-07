@@ -36,6 +36,8 @@ public class App {
     }
 
     private static int getUserChoice(Scanner sc) {
+        System.out.print("Your choice: ");
+
         try {
             String chosenGame = sc.next();
             return Integer.parseInt(chosenGame);
