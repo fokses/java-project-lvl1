@@ -12,6 +12,11 @@ public class App {
     private static final int CODE_EXIT = 0;
     private static final int CODE_SETNAME = 1;
     private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
+    private static final int EVEN  = 2;
+    private static final int CALC  = 3;
+    private static final int GCD  = 4;
+    private static final int PROGRESSION  = 5;
+    private static final int PRIME  = 6;
 
     public static void main(String[] args) {
         printMenu();
@@ -20,19 +25,25 @@ public class App {
         int userChoice = getUserChoice(sc);
 
         switch (userChoice) {
-            case (CODE_EXIT):
-                return;
-            case (CODE_SETNAME):
-                Helper.printWelcome();
-                String playerName = Helper.getPlayerName(sc);
-                Helper.printGreeting(playerName);
+            case (CODE_EXIT) -> {
                 break;
-            default:
-                String gameName = getGameName(userChoice);
-                startGame(gameName);
+            }
+            case (CODE_SETNAME) -> printHelloAndExit(sc);
+            case (EVEN) -> Even.startGame();
+            case (CALC) -> Calc.startGame();
+            case (GCD) -> hexlet.code.games.GCD.startGame();
+            case (PROGRESSION) -> Progression.startGame();
+            case (PRIME) -> Prime.startGame();
+            default -> System.out.println("Wrong choice");
         }
 
         sc.close();
+    }
+
+    private static void printHelloAndExit(Scanner sc) {
+        Helper.printWelcome();
+        String playerName = Helper.getPlayerName(sc);
+        Helper.printGreeting(playerName);
     }
 
     private static int getUserChoice(Scanner sc) {
@@ -43,36 +54,6 @@ public class App {
             return Integer.parseInt(chosenGame);
         } catch (Exception e) {
             return -1;
-        }
-    }
-
-    private static String getGameName(int chosenGame) {
-        try {
-            return App.GAMES[chosenGame - 2];
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    private static void startGame(String gameName) {
-        switch (gameName) {
-            case ("Even"):
-                Even.startGame();
-                break;
-            case ("Calc"):
-                Calc.startGame();
-                break;
-            case ("GCD"):
-                GCD.startGame();
-                break;
-            case ("Prime"):
-                Prime.startGame();
-                break;
-            case ("Progression"):
-                Progression.startGame();
-                break;
-            default:
-                System.out.println("Wrong game choice");
         }
     }
 
