@@ -11,20 +11,15 @@ public class Engine {
 
     public static void processGame(String description, String[][] roundsOfGame) {
 
-        String playerName = "";
         Scanner sc = new Scanner(System.in);
 
-        try {
-            playerName = getPlayerName(sc);
-        } catch (Exception e) {
+        Helper.printWelcome();
+        String playerName = Helper.getPlayerName(sc);
+        if (playerName == null) {
             System.out.println("Error getting name:");
-            System.out.println(e.getMessage());
             return;
         }
-
-        if (roundsOfGame == null) { //set name and exit
-            return;
-        }
+        Helper.printGreeting(playerName);
 
         processGameRounds(description, roundsOfGame, playerName, sc);
     }
@@ -70,16 +65,6 @@ public class Engine {
             printWrongAnswer(answer, correctAnswer, playerName);
             return false;
         }
-    }
-
-    private static String getPlayerName(Scanner sc) throws Exception {
-        System.out.println("Welcome to the Brain Games!");
-        System.out.println("May I have your name?");
-
-        String playerName = sc.next();
-
-        System.out.println("Hello, " + playerName + "!");
-        return playerName;
     }
 
     private static void printWrongAnswer(String wrongAnswer, String correctAnswer, String playerName) {

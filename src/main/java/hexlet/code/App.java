@@ -5,68 +5,54 @@ import hexlet.code.games.Calc;
 import hexlet.code.games.Prime;
 import hexlet.code.games.GCD;
 import hexlet.code.games.Progression;
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 public class App {
     private static final int CODE_EXIT = 0;
     private static final int CODE_SETNAME = 1;
     private static final String[] GAMES = {"Even", "Calc", "GCD", "Progression", "Prime"};
-    public static final int NUMBER_OF_GAMES;
-
-    static {
-        NUMBER_OF_GAMES = GAMES.length;
-    }
 
     public static void main(String[] args) {
-        int chosenGame;
+        printMenu();
 
         Scanner sc = new Scanner(System.in);
+        int userChoice = getUserChoice(sc);
 
-        printListOfGames();
-
-        System.out.print("Your choice: ");
-
-        try {
-            chosenGame = sc.nextInt();
-        } catch (Exception e) {
-            if (e instanceof InputMismatchException) {
-                System.out.println("You have to input numbers only!");
-            } else {
-                System.out.println(e.getMessage());
-            }
-
-            return; //There is no reason to continue
-        }
-
-        processGameChoice(chosenGame);
-        sc.close();
-    }
-
-    private static void processGameChoice(int chosenGame) {
-
-        switch (chosenGame) {
+        switch (userChoice) {
             case (CODE_EXIT):
                 return;
             case (CODE_SETNAME):
-                Engine.processGame("", null); //just say hello
+                Helper.printWelcome();
+                String playerName = Helper.getPlayerName(sc);
+                Helper.printGreeting(playerName);
                 break;
             default:
-                startGame(chosenGame);
+                String gameName = getGameName(userChoice);
+                startGame(gameName);
+        }
+
+        sc.close();
+    }
+
+    private static int getUserChoice(Scanner sc) {
+        try {
+            String chosenGame = sc.next();
+            return Integer.parseInt(chosenGame);
+        } catch (Exception e) {
+            return -1;
         }
     }
 
     private static String getGameName(int chosenGame) {
-        if (chosenGame < 0 || chosenGame > App.NUMBER_OF_GAMES + 2) {
+        try {
+            return App.GAMES[chosenGame - 2];
+        } catch (Exception e) {
             return "";
         }
-
-        return App.GAMES[chosenGame - 2];
     }
 
-    private static void startGame(int chosenGame) {
-        String gameName = getGameName(chosenGame);
-
+    private static void startGame(String gameName) {
         switch (gameName) {
             case ("Even"):
                 Even.startGame();
@@ -88,7 +74,7 @@ public class App {
         }
     }
 
-    private static void printListOfGames() {
+    private static void printMenu() {
         System.out.println("Please enter the game number and press Enter.");
         System.out.println("1 - Greet");
 
